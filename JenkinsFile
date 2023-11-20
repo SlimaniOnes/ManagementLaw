@@ -12,7 +12,7 @@ environment {
           stage('Build') 
            {
                 steps{
-                  bat "${MAVEN_HOME}/bin/mvn clean install"
+                  bat "${MAVEN_HOME}/bin/mvn  install"
                         echo "Building the Code.........."
                    
 
