@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Desc Cases</title>
+</head>
+<body>
+    <h1>Desc Cases for Case Jurisdiction ID: <span th:text="${selected}">N/A</span></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="descCase : ${desccases}">
+                <td th:text="${descCase.id}">N/A</td>
+                <td th:text="${descCase.description}">N/A</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
