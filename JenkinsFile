@@ -24,7 +24,7 @@ environment {
                 stage('Deploy') 
                 {
                         steps{
-                            bat "${MAVEN_HOME}/bin/mvn deploy"
+                          
                            echo "Deploying the Project.........."
                               }
                 }
