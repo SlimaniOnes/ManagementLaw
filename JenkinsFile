@@ -45,7 +45,7 @@ environment {
             stage('Deploy Docker Image')
                {
                        echo "Docker Image Tag Name: ${DockerImageTag}"
-                        bat 'docker -H  -H tcp://192.168.42.10:2375 run --name devopsexemple -d -p 2000:2000 devopsexemple${env.BUILD_NUMBER}" 
+                        bat 'docker -H  -H tcp://192.168.42.10:2375 run --name devopsexemple -d -p 2000:2000 devopsexemple${env.BUILD_NUMBER}'
                }
                 
              
