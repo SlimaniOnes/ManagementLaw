@@ -14,7 +14,9 @@ environment {
          stage('Clone Repo')
          {
                steps {
-                  git'https://github.com/SlimaniOnes/ManagementLaw.git'
+                  script {
+                        git'https://github.com/SlimaniOnes/ManagementLaw.git'
+                        }
                      }
          }
 
@@ -22,17 +24,21 @@ environment {
           stage('Build') 
            {
             steps {
+               script {
                   bat "${MAVEN_HOME}/bin/mvn clean install"
                         echo "Building the Code.........."
-                  }
-             }
+                        }
+                   }
+            }
 
 
             stage('Test') 
                 {
                   steps {
+                     script {
                             bat "${MAVEN_HOME}/bin/mvn test"
                             echo "Testing the Code.........."
+                            }
                         }
                 }
 
@@ -40,24 +46,29 @@ environment {
             stage('Initialize Docker') 
                 {
                steps {
+                  script {
                            env.PATH = "${DOCKER_HOME}/BIN:${env.PATH} "     
                            echo "Initailze DOCKER......"
-                     }
-                              
+                         }
+                    }          
                 }
                 
              stage('Build Docker Image')
                {
+                  script {
                         bat "docker -H tcp://192.168.42.10:2375 build -t devopsexemple${env.BUILD_NUMBER} ." 
+                        }
                }
 
             stage('Deploy Docker Image')
                {
                steps {
+                  script {
                         echo "Docker Image Tag Name: ${DockerImageTag}"
                         bat 'docker -H  -H tcp://192.168.42.10:2375 run --name devopsexemple -d -p 2000:2000 devopsexemple${env.BUILD_NUMBER}'
-                     }
-                }
+                         }
+                     }   
+               }
              
                 }
                 post {
