@@ -13,27 +13,36 @@ environment {
 
          stage('Clone Repo')
          {
+               steps {
                   git'https://github.com/SlimaniOnes/ManagementLaw.git'
+                     }
          }
 
 
           stage('Build') 
            {
+            steps {
                   bat "${MAVEN_HOME}/bin/mvn clean install"
                         echo "Building the Code.........."
+                  }
              }
 
 
             stage('Test') 
                 {
-                bat "${MAVEN_HOME}/bin/mvn test"
-                echo "Testing the Code.........."
+                  steps {
+                            bat "${MAVEN_HOME}/bin/mvn test"
+                            echo "Testing the Code.........."
+                        }
                 }
 
 
             stage('Initialize Docker') 
-                {          env.PATH = "${DOCKER_HOME}/BIN:${env.PATH} "     
+                {
+               steps {
+                           env.PATH = "${DOCKER_HOME}/BIN:${env.PATH} "     
                            echo "Initailze DOCKER......"
+                     }
                               
                 }
                 
@@ -44,10 +53,11 @@ environment {
 
             stage('Deploy Docker Image')
                {
-                       echo "Docker Image Tag Name: ${DockerImageTag}"
+               steps {
+                        echo "Docker Image Tag Name: ${DockerImageTag}"
                         bat 'docker -H  -H tcp://192.168.42.10:2375 run --name devopsexemple -d -p 2000:2000 devopsexemple${env.BUILD_NUMBER}'
-               }
-                
+                     }
+                }
              
                 }
                 post {
