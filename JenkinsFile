@@ -2,7 +2,7 @@ pipeline{
    agent any
 environment {
         // Ajoutez le chemin vers votre installation JDK ici
-        JAVA_HOME = tool 'JDK'
+        
         MAVEN_HOME = tool 'Maven'
         DOCKER_HOME = tool 'Docker'
         DockerImageTag = "devopsexemple${env.BUILD_NUMBER}"
