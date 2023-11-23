@@ -55,9 +55,11 @@ environment {
                 
              stage('Build Docker Image')
                {
-                  script {
+                  steps {
+                     script{
                         bat "docker -H tcp://192.168.42.10:2375 build -t devopsexemple${env.BUILD_NUMBER} ." 
                         }
+                     }
                }
 
             stage('Deploy Docker Image')
