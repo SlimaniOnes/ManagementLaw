@@ -1,7 +1,7 @@
 pipeline{
    agent any
 environment {
-        // Ajoutez le chemin vers votre installation JDK ici
+        //le chemin vers les tools ici
         
         MAVEN_HOME = tool 'Maven'
         DOCKER_HOME = tool 'Docker'
