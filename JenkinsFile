@@ -2,49 +2,53 @@ pipeline{
    agent any
 environment {
         // Ajoutez le chemin vers votre installation JDK ici
-        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-17.0.5'
-   MAVEN_HOME = tool 'Maven'
+        JAVA_HOME = tool 'JDK'
+        MAVEN_HOME = tool 'Maven'
+        DOCKER_HOME = tool 'Docker'
+        DockerImageTag = "devopsexemple${env.BUILD_NUMBER}"
 
     }
       stages 
         {
 
+         stage('Clone Repo')
+         {
+                  git'https://github.com/SlimaniOnes/ManagementLaw.git'
+         }
+
+
           stage('Build') 
            {
-                steps{
                   bat "${MAVEN_HOME}/bin/mvn clean install"
                         echo "Building the Code.........."
-                   
+             }
 
 
-
-                }
-                }
-                
-                stage('Deploy') 
+            stage('Test') 
                 {
-                        steps{
-             
-        
-                          
-                           echo "Deploying the Project.........."
-                              }
-                }
-                
-                stage('Test') 
-                {
-                steps{
                 bat "${MAVEN_HOME}/bin/mvn test"
                 echo "Testing the Code.........."
                 }
+
+
+            stage('Initialize Docker') 
+                {          env.PATH = "${DOCKER_HOME}/BIN:${env.PATH} "     
+                           echo "Initailze DOCKER......"
+                              
                 }
                 
-                stage('Release') 
-                {
-                steps{
-                echo "Releasing the Project.........."
-                }
-                }
+             stage('Build Docker Image')
+               {
+                        bat "docker -H tcp://192.168.42.10:2375 build -t devopsexemple${env.BUILD_NUMBER} ." 
+               }
+
+            stage('Deploy Docker Image')
+               {
+                       echo "Docker Image Tag Name: ${DockerImageTag}"
+                        bat 'docker -H  -H tcp://192.168.42.10:2375 run --name devopsexemple -d -p 2000:2000 devopsexemple${env.BUILD_NUMBER}" 
+               }
+                
+             
                 }
                 post {
                         success {
