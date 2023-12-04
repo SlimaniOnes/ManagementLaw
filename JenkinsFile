@@ -11,15 +11,7 @@ environment {
       stages 
         {
 
-         stage('Clone Repo')
-         {
-               steps {
-                  script {
-                        git'https://github.com/SlimaniOnes/ManagementLaw.git'
-                        }
-                     }
-         }
-
+   
 
           stage('Build') 
            {
@@ -30,6 +22,8 @@ environment {
                         }
                    }
             }
+
+
 
 
             stage('Test') 
