@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-data-deployment
+  labels:
+    app: app-pfe
+spec:
+  selector:
+    matchLabels:
+      app: mysql-data
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-data
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql-data
+        env:
+        - name: MYSQL_DATABASE
+          value: "sms"
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root"
+        - name: MYSQL_USER
+          value: ""
+        - name: MYSQL_PASSWORD
+          value: ""
+        ports:
+        - containerPort: 3306
+          name: mysql-data        
+		volumeMounts:
+        - name: mysql-data-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-data-persistent-storage
+        persistentVolumeClaim:
+          claimName:mysql-pv-claim
+		
+		
+		
