@@ -21,7 +21,7 @@ metadata:
   labels: 
     app: management_law
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: management_law
